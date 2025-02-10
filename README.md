@@ -17,9 +17,11 @@ Questo progetto in Python esegue un'analisi approfondita sui dati relativi alle 
 
 - **Costruzione e Valutazione dei Modelli di Classificazione**  
   - **Decision Tree:**  
-    Viene testata la performance di alberi decisionali con profondità variabile (da 1 a 10) tramite validazione incrociata a 10 fold. I risultati vengono visualizzati graficamente e, infine, viene addestrato un modello con `max_depth=3` sui dati di training.  
+    Viene testata la performance di alberi decisionali con profondità variabile (da 1 a 10) tramite validazione incrociata a 10 fold. I risultati vengono visualizzati graficamente e, infine, viene addestrato un modello con `max_depth=3` sui dati di training.
+    ![Decision Tree](image/decisiontree.png)
   - **Random Forest:**  
     Viene eseguita la validazione incrociata a 5 fold per modelli Random Forest con numero di stimatori variabile (da 10 a 100, a passi di 10). Dopo aver visualizzato le performance, viene addestrato un modello con `n_estimators=90`.
+    ![Decision Tree](image/randomforest.png)
 
   Per entrambi i modelli, le prestazioni vengono valutate su un set di test calcolando le seguenti metriche:
   - **Accuracy**
