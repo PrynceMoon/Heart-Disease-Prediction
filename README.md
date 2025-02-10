@@ -125,9 +125,6 @@ Il progetto richiede l'installazione delle seguenti librerie Python:
 Inoltre, è necessario avere i seguenti file nella struttura del progetto:
 - `heart.csv` (dataset)
 - `heart_rules.pl` (file Prolog contenente le regole, che include anche `heart_kb.pl`)
-- La cartella `image` contenente:
-  - `decisiontree.png`
-  - `randomforest.png`
 
 ---
 
