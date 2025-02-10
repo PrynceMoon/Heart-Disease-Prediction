@@ -95,6 +95,7 @@ Il programma inizia eseguendo una serie di analisi esplorative sul dataset, al f
   
   I risultati vengono troncati a un massimo di 3 elementi per una visualizzazione più compatta.
 
+  ![Integrazione con Prolog per l'Analisi Basata su Regole](image/prolog.png)
 ---
 
 ### 5. Algoritmo BFS per la Ricerca di Pazienti Simili
@@ -106,6 +107,8 @@ Il programma inizia eseguendo una serie di analisi esplorative sul dataset, al f
   - La ricerca si espande in ampiezza fino a una profondità massima (default 3).
   - Vengono evitati duplicati tramite una struttura di controllo (insieme dei visitati).
   - Se il numero di risultati supera 3, viene aggiunto un segnaposto per indicare il troncamento.
+
+  ![Algoritmo BFS per la Ricerca di Pazienti Simili](image/bfs.png)
 
 ---
 
