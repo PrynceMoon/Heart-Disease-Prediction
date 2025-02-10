@@ -42,7 +42,6 @@ Questo progetto in Python esegue un'analisi approfondita sui dati relativi alle 
   - ROC-AUC  
   Queste metriche sono calcolate e stampate tramite la funzione `stampa_metriche`.
 
-- **Immagine esplicativa:**  
   ![Decision Tree](image/decisiontree.png)
 
 #### Random Forest
@@ -53,7 +52,6 @@ Questo progetto in Python esegue un'analisi approfondita sui dati relativi alle 
 - **Valutazione:**  
   Le metriche di valutazione (come per il Decision Tree) vengono calcolate sul set di test.
   
-- **Immagine esplicativa:**  
   ![Random Forest](image/randomforest.png)
 
 ### 4. Integrazione con Prolog per l'Analisi Basata su Regole
