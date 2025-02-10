@@ -1,54 +1,80 @@
 # Predizione delle Malattie Cardiache e Analisi Basata su Conoscenza
 
-Questo progetto in Python esegue un'analisi approfondita sui dati relativi alle malattie cardiache e utilizza modelli di apprendimento supervisionato (Decision Tree e Random Forest) per la predizione. Inoltre, integra un sistema basato su regole tramite Prolog per estrarre ulteriori informazioni (ad esempio, l'identificazione dei pazienti ad alto rischio) e per eseguire una ricerca in ampiezza (BFS) per trovare pazienti simili.
+Questo progetto in Python esegue un'analisi approfondita sui dati relativi alle malattie cardiache e utilizza modelli di apprendimento supervisionato per la predizione. In particolare, vengono impiegati i modelli **Decision Tree** e **Random Forest** per la classificazione, e viene integrato un sistema basato su regole tramite Prolog per ottenere ulteriori informazioni (ad esempio, l'identificazione dei pazienti ad alto rischio). Inoltre, è implementato un algoritmo di ricerca in ampiezza (BFS) per trovare pazienti simili.
 
 ---
 
 ## Contenuto del Progetto
 
-- **Data Exploration e Visualizzazione**  
-  Il programma carica un dataset in formato CSV, esegue analisi esplorative (forma, statistiche descrittive, controllo dei valori mancanti) e crea varie visualizzazioni (istogrammi, grafico a barre, heatmap della correlazione) per comprendere la distribuzione dei dati.
+### 1. Data Exploration e Visualizzazione
+- **Caricamento e analisi del dataset:**  
+  Il dataset viene caricato da un file CSV e vengono mostrate informazioni come il numero di righe e colonne, le statistiche descrittive, il controllo dei valori mancanti e le prime righe del dataset.
 
-- **Pre-elaborazione dei Dati**  
-  Le variabili categoriche vengono trasformate in variabili dummy (one-hot encoding) e le variabili numeriche vengono standardizzate per avere media 0 e deviazione standard 1. Successivamente, il dataset viene diviso in variabili indipendenti (X) e variabile target (y).
+- **Visualizzazione:**  
+  Vengono generate diverse visualizzazioni, tra cui:
+  - Istogrammi per ogni variabile.
+  - Grafico a barre per la distribuzione della variabile target.
+  - Heatmap della matrice di correlazione per evidenziare le relazioni tra le variabili.
 
-- **Divisione in Set di Training e Test**  
-  Utilizzando `train_test_split` il dataset viene suddiviso in un set di training (80%) e un set di test (20%) per addestrare e valutare i modelli.
+### 2. Pre-elaborazione dei Dati
+- **Trasformazione delle variabili categoriche:**  
+  Le variabili categoriche vengono trasformate in variabili dummy (one-hot encoding) utilizzando `pd.get_dummies()`.
 
-- **Costruzione e Valutazione dei Modelli di Classificazione**  
-  - **Decision Tree:**  
-    Viene testata la performance di alberi decisionali con profondità variabile (da 1 a 10) tramite validazione incrociata a 10 fold. I risultati vengono visualizzati graficamente e, infine, viene addestrato un modello con `max_depth=3` sui dati di training.
-    ![Decision Tree](image/decisiontree.png)
-  - **Random Forest:**  
-    Viene eseguita la validazione incrociata a 5 fold per modelli Random Forest con numero di stimatori variabile (da 10 a 100, a passi di 10). Dopo aver visualizzato le performance, viene addestrato un modello con `n_estimators=90`.
-    ![Decision Tree](image/randomforest.png)
+- **Standardizzazione:**  
+  Le variabili numeriche vengono standardizzate (media 0 e deviazione standard 1) tramite `StandardScaler`.
 
-  Per entrambi i modelli, le prestazioni vengono valutate su un set di test calcolando le seguenti metriche:
-  - **Accuracy**
-  - **Precision**
-  - **Recall**
-  - **F1-score**
-  - **ROC-AUC**
+- **Suddivisione del dataset:**  
+  I dati vengono suddivisi in variabili indipendenti (X) e variabile target (y), e successivamente divisi in set di training (80%) e test (20%) con `train_test_split`.
 
-  Una funzione `stampa_metriche` centralizza il calcolo e la stampa di queste metriche.
+### 3. Costruzione e Valutazione dei Modelli di Classificazione
 
-- **Integrazione con Prolog per l'Analisi Basata su Regole**  
-  Il programma utilizza il modulo `pyswip` per interfacciarsi con Prolog. Vengono consultati i file `heart_rules.pl` (che include anche `heart_kb.pl`) e vengono eseguite diverse query per ottenere informazioni relative a:
+#### Decision Tree
+- **Validazione Incrociata:**  
+  Viene testata la performance di alberi decisionali con profondità variabile (da 1 a 10) utilizzando la validazione incrociata (10-fold).  
+- **Addestramento:**  
+  Viene addestrato un modello di Decision Tree con `max_depth=3` sui dati di training.
+- **Valutazione:**  
+  Le prestazioni del modello vengono valutate sul set di test calcolando le seguenti metriche:
+  - Accuracy
+  - Precision
+  - Recall
+  - F1-score
+  - ROC-AUC  
+  Queste metriche sono calcolate e stampate tramite la funzione `stampa_metriche`.
+
+- **Immagine esplicativa:**  
+  ![Decision Tree](image/decisiontree.png)
+
+#### Random Forest
+- **Validazione Incrociata:**  
+  Viene eseguita la validazione incrociata (5-fold) per modelli Random Forest variando il numero di stimatori (da 10 a 100, a passi di 10).
+- **Addestramento:**  
+  Viene addestrato un modello Random Forest con `n_estimators=90` sui dati di training.
+- **Valutazione:**  
+  Le metriche di valutazione (come per il Decision Tree) vengono calcolate sul set di test.
+  
+- **Immagine esplicativa:**  
+  ![Random Forest](image/randomforest.png)
+
+### 4. Integrazione con Prolog per l'Analisi Basata su Regole
+- **Consultazione e Query:**  
+  Il programma utilizza il modulo `pyswip` per interfacciarsi con Prolog. Viene consultato il file `heart_rules.pl` (che include anche `heart_kb.pl`) e vengono eseguite diverse query per ottenere:
   - Pazienti ad alto rischio (`alto_rischio`)
   - Pazienti con ipertensione o colesterolo alto (`ipertensione_colesterolo`)
   - Pazienti con anomalie all'ECG (`ecg_anomalo`)
   - Pazienti con angina da sforzo (`angina_sforzo`)
   - Pazienti con profilo ad alto rischio (`profilo_alto_rischio`)
 
-  I risultati vengono troncati a un massimo di 3 output per una visualizzazione più compatta.
+  I risultati vengono troncati per visualizzare al massimo 3 elementi per ciascuna query.
 
-- **Algoritmo BFS per la Ricerca di Pazienti Simili**  
-  Viene implementato un algoritmo di Breadth-First Search (BFS) per trovare pazienti simili basandosi su una condizione definita nella query Prolog `heart_patient`.  
-  L'algoritmo:
-  - Parte da un paziente iniziale (definito da età e sesso).
-  - Espande la ricerca in ampiezza fino a una profondità massima (default 3).
-  - Evita di visitare ripetutamente lo stesso paziente.
-  - Restituisce un elenco di pazienti simili (con un segnaposto se il numero di risultati supera 3).
+### 5. Algoritmo BFS per la Ricerca di Pazienti Simili
+- **Implementazione della BFS:**  
+  Viene implementato un algoritmo di ricerca in ampiezza (BFS) per trovare pazienti simili basandosi su una condizione definita nella query Prolog `heart_patient`.  
+- **Funzionamento:**  
+  - Si parte da un paziente iniziale (definito da età e sesso).
+  - La ricerca si espande in ampiezza fino a una profondità massima (default 3).
+  - Si evitano duplicazioni tenendo traccia dei pazienti già visitati.
+  - Se il numero di risultati supera 3, viene aggiunto un segnaposto per indicare il troncamento.
 
 ---
 
@@ -62,15 +88,18 @@ Il progetto richiede l'installazione delle seguenti librerie Python:
 - pyswip
 - scikit-learn
 
-È inoltre necessario avere i file:
-- `heart.csv` (il dataset)
+Inoltre, è necessario avere i seguenti file nella struttura del progetto:
+- `heart.csv` (dataset)
 - `heart_rules.pl` (file Prolog contenente le regole, che include anche `heart_kb.pl`)
+- La cartella `image` contenente:
+  - `decisiontree.png`
+  - `randomforest.png`
 
 ---
 
 ## Istruzioni per l'Esecuzione
 
 1. **Installazione delle Dipendenze:**  
-   Assicurati di avere installato i pacchetti necessari. Puoi installarli utilizzando pip:
+   Installa le librerie richieste, ad esempio con:
    ```bash
    pip install numpy pandas matplotlib seaborn pyswip scikit-learn
