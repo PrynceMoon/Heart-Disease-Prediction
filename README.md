@@ -27,7 +27,6 @@ Questo progetto in Python esegue un'analisi approfondita sui dati relativi alle 
   - **Recall**
   - **F1-score**
   - **ROC-AUC**
-  - **Matrice di Confusione**
 
   Una funzione `stampa_metriche` centralizza il calcolo e la stampa di queste metriche.
 
