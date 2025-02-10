@@ -15,6 +15,7 @@ Il programma inizia eseguendo una serie di analisi esplorative sul dataset, al f
   Viene generata una figura contenente un istogramma per ciascuna variabile del dataset.  
 - **Perché è utile:**  
   Gli istogrammi permettono di osservare la distribuzione (frequenza, forma, presenza di outlier) delle variabili numeriche. In questo modo, è possibile capire rapidamente la natura dei dati e identificare eventuali anomalie.
+  
   ![Istogrammi delle variabili](image/istogrammi.png)
 
 
@@ -23,14 +24,16 @@ Il programma inizia eseguendo una serie di analisi esplorative sul dataset, al f
   Un grafico a barre (countplot) che visualizza il numero di osservazioni per ciascuna classe della variabile target (ad esempio, presenza o assenza di malattia cardiaca).  
 - **Perché è utile:**  
   Questo grafico consente di verificare se le classi sono bilanciate o sbilanciate, informazione importante per la scelta dei modelli di classificazione e per l'interpretazione dei risultati.
-    ![Grafico a barre delle variabili Target](image/grafico_a_barre.png)
+
+  ![Grafico a barre delle variabili Target](image/grafico_a_barre.png)
 
 #### c) Heatmap della Matrice di Correlazione
 - **Cosa mostra:**  
   Una heatmap che rappresenta la matrice di correlazione tra tutte le variabili del dataset. I valori sono annotati e colorati in base al grado di correlazione (con una scala cromatica 'RdYlGn').  
 - **Perché è utile:**  
   La heatmap aiuta a identificare relazioni forti (positive o negative) tra le variabili. Queste informazioni possono essere utili per selezionare le caratteristiche più rilevanti e per comprendere meglio le dinamiche interne del dataset.
-    ![Heatmap della Matrice di Correlazione](image/matrice_di_correlazione.png)
+
+  ![Heatmap della Matrice di Correlazione](image/matrice_di_correlazione.png)
 
 ---
 
