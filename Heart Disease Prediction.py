@@ -157,26 +157,27 @@ prolog = Prolog()
 prolog.consult("heart_rules.pl")
 
 # Esegui le query definite in heart_rules.pl.
-# Ciascuna query restituisce un dizionario con le variabili corrispondenti.
-results_alto_rischio = [ {"Età": res["Età"], "Sesso": res["Sesso"]} 
-                         for res in prolog.query("alto_rischio(Età, Sesso)") ]
+results_alto_rischio = [{"Età": res["Età"], "Sesso": res["Sesso"]} 
+                          for res in prolog.query("alto_rischio(Età, Sesso)")]
+results_ipertensione = [{"Età": res["Età"], "Sesso": res["Sesso"]} 
+                          for res in prolog.query("ipertensione_colesterolo(Età, Sesso)")]
+results_ecg_anomalo = [{"Età": res["Età"], "Sesso": res["Sesso"]} 
+                         for res in prolog.query("ecg_anomalo(Età, Sesso)")]
+results_angina = [{"Età": res["Età"], "Sesso": res["Sesso"]} 
+                   for res in prolog.query("angina_sforzo(Età, Sesso)")]
+results_profilo = [{"Età": res["Età"], "Sesso": res["Sesso"]} 
+                    for res in prolog.query("profilo_alto_rischio(Età, Sesso)")]
 
-results_ipertensione = [ {"Età": res["Età"], "Sesso": res["Sesso"]} 
-                         for res in prolog.query("ipertensione_colesterolo(Età, Sesso)") ]
+# Funzione per troncare i risultati: se ce ne sono più di 3, mostra i primi 2 e aggiungi il simbolo di troncamento.
+def truncate_results(results, max_items=3):
+    if len(results) > max_items:
+        return results[:max_items-1] + ["[...,...]"]
+    return results
 
-results_ecg_anomalo = [ {"Età": res["Età"], "Sesso": res["Sesso"]} 
-                        for res in prolog.query("ecg_anomalo(Età, Sesso)") ]
-
-results_angina = [ {"Età": res["Età"], "Sesso": res["Sesso"]} 
-                   for res in prolog.query("angina_sforzo(Età, Sesso)") ]
-
-results_profilo = [ {"Età": res["Età"], "Sesso": res["Sesso"]} 
-                    for res in prolog.query("profilo_alto_rischio(Età, Sesso)") ]
-
-# Visualizza i risultati formattati secondo il template richiesto
+# Visualizza i risultati formattati secondo il template richiesto, applicando la troncatura
 print("\n📊 Analisi basata su regole Prolog:\n")
-print("🔴 Pazienti ad ALTO RISCHIO:", results_alto_rischio)
-print("🟠 Pazienti con IPERTENSIONE o COLESTEROLO ALTO:", results_ipertensione)
-print("🔵 Pazienti con ECG ANOMALO:", results_ecg_anomalo)
-print("⚠️ Pazienti con ANGINA DA SFORZO:", results_angina)
-print("🔥 Pazienti con PROFILO AD ALTO RISCHIO:", results_profilo)
+print("🔴 Pazienti ad ALTO RISCHIO:", truncate_results(results_alto_rischio))
+print("🟠 Pazienti con IPERTENSIONE o COLESTEROLO ALTO:", truncate_results(results_ipertensione))
+print("🔵 Pazienti con ECG ANOMALO:", truncate_results(results_ecg_anomalo))
+print("⚠️ Pazienti con ANGINA DA SFORZO:", truncate_results(results_angina))
+print("🔥 Pazienti con PROFILO AD ALTO RISCHIO:", truncate_results(results_profilo))
