@@ -7,71 +7,101 @@ Questo progetto in Python esegue un'analisi approfondita sui dati relativi alle 
 ## Contenuto del Progetto
 
 ### 1. Data Exploration e Visualizzazione
-- **Caricamento e analisi del dataset:**  
-  Il dataset viene caricato da un file CSV e vengono mostrate informazioni come il numero di righe e colonne, le statistiche descrittive, il controllo dei valori mancanti e le prime righe del dataset.
 
-- **Visualizzazione:**  
-  Vengono generate diverse visualizzazioni, tra cui:
-  - Istogrammi per ogni variabile.
-  - Grafico a barre per la distribuzione della variabile target.
-  - Heatmap della matrice di correlazione per evidenziare le relazioni tra le variabili.
+Il programma inizia eseguendo una serie di analisi esplorative sul dataset, al fine di comprendere la distribuzione e le relazioni tra le variabili. In questa fase vengono visualizzati i seguenti grafici:
+
+#### a) Istogrammi delle Variabili
+- **Cosa mostra:**  
+  Viene generata una figura contenente un istogramma per ciascuna variabile del dataset.  
+- **Perché è utile:**  
+  Gli istogrammi permettono di osservare la distribuzione (frequenza, forma, presenza di outlier) delle variabili numeriche. In questo modo, è possibile capire rapidamente la natura dei dati e identificare eventuali anomalie.
+  ![Istogrammi delle variabili](image/istogrammi.png)
+
+
+#### b) Grafico a Barre della Variabile Target
+- **Cosa mostra:**  
+  Un grafico a barre (countplot) che visualizza il numero di osservazioni per ciascuna classe della variabile target (ad esempio, presenza o assenza di malattia cardiaca).  
+- **Perché è utile:**  
+  Questo grafico consente di verificare se le classi sono bilanciate o sbilanciate, informazione importante per la scelta dei modelli di classificazione e per l'interpretazione dei risultati.
+    ![Grafico a barre delle variabili Target](image/grafico_a_barre.png)
+
+#### c) Heatmap della Matrice di Correlazione
+- **Cosa mostra:**  
+  Una heatmap che rappresenta la matrice di correlazione tra tutte le variabili del dataset. I valori sono annotati e colorati in base al grado di correlazione (con una scala cromatica 'RdYlGn').  
+- **Perché è utile:**  
+  La heatmap aiuta a identificare relazioni forti (positive o negative) tra le variabili. Queste informazioni possono essere utili per selezionare le caratteristiche più rilevanti e per comprendere meglio le dinamiche interne del dataset.
+    ![Heatmap della Matrice di Correlazione](image/matrice_di_correlazione.png)
+
+---
 
 ### 2. Pre-elaborazione dei Dati
+
 - **Trasformazione delle variabili categoriche:**  
-  Le variabili categoriche vengono trasformate in variabili dummy (one-hot encoding) utilizzando `pd.get_dummies()`.
-
+  Le variabili categoriche vengono convertite in variabili dummy (one-hot encoding) utilizzando `pd.get_dummies()`.
+  
 - **Standardizzazione:**  
-  Le variabili numeriche vengono standardizzate (media 0 e deviazione standard 1) tramite `StandardScaler`.
+  Le variabili numeriche vengono standardizzate utilizzando `StandardScaler` per ottenere valori con media 0 e deviazione standard 1.
+  
+- **Divisione del Dataset:**  
+  Il dataset viene suddiviso in:
+  - **X:** Variabili indipendenti (tutte le colonne eccetto il target).
+  - **y:** Variabile dipendente (target).
+  
+- **Train-Test Split:**  
+  I dati vengono ulteriormente divisi in set di training (80%) e test (20%) con `train_test_split` per addestrare e valutare i modelli.
 
-- **Suddivisione del dataset:**  
-  I dati vengono suddivisi in variabili indipendenti (X) e variabile target (y), e successivamente divisi in set di training (80%) e test (20%) con `train_test_split`.
+---
 
 ### 3. Costruzione e Valutazione dei Modelli di Classificazione
 
 #### Decision Tree
 - **Validazione Incrociata:**  
-  Viene testata la performance di alberi decisionali con profondità variabile (da 1 a 10) utilizzando la validazione incrociata (10-fold).  
-- **Addestramento:**  
-  Viene addestrato un modello di Decision Tree con `max_depth=3` sui dati di training.
-- **Valutazione:**  
-  Le prestazioni del modello vengono valutate sul set di test calcolando le seguenti metriche:
+  Viene eseguita la validazione incrociata a 10-fold per modelli Decision Tree con profondità variabile (da 1 a 10) per determinare la profondità ottimale.
+  
+- **Addestramento e Valutazione:**  
+  Dopo aver analizzato i punteggi, viene addestrato un modello di Decision Tree con `max_depth=3` sui dati di training. Le prestazioni vengono poi valutate sul set di test calcolando metriche quali:
   - Accuracy
   - Precision
   - Recall
   - F1-score
   - ROC-AUC  
-  Queste metriche sono calcolate e stampate tramite la funzione `stampa_metriche`.
+  Queste metriche vengono calcolate tramite una funzione dedicata `stampa_metriche`.
 
   ![Decision Tree](image/decisiontree.png)
 
 #### Random Forest
 - **Validazione Incrociata:**  
-  Viene eseguita la validazione incrociata (5-fold) per modelli Random Forest variando il numero di stimatori (da 10 a 100, a passi di 10).
-- **Addestramento:**  
-  Viene addestrato un modello Random Forest con `n_estimators=90` sui dati di training.
-- **Valutazione:**  
-  Le metriche di valutazione (come per il Decision Tree) vengono calcolate sul set di test.
+  Viene eseguita la validazione incrociata a 5-fold per modelli Random Forest variando il numero di stimatori (da 10 a 100, a passi di 10) per individuare il numero ottimale.
+  
+- **Addestramento e Valutazione:**  
+  Un modello Random Forest con `n_estimators=90` viene addestrato sui dati di training e le prestazioni vengono valutate sul set di test utilizzando le stesse metriche del Decision Tree.
   
   ![Random Forest](image/randomforest.png)
 
+---
+
 ### 4. Integrazione con Prolog per l'Analisi Basata su Regole
+
 - **Consultazione e Query:**  
-  Il programma utilizza il modulo `pyswip` per interfacciarsi con Prolog. Viene consultato il file `heart_rules.pl` (che include anche `heart_kb.pl`) e vengono eseguite diverse query per ottenere:
+  Utilizzando il modulo `pyswip`, il programma carica il file `heart_rules.pl` (che include anche `heart_kb.pl`) e esegue diverse query per ottenere informazioni specifiche, quali:
   - Pazienti ad alto rischio (`alto_rischio`)
   - Pazienti con ipertensione o colesterolo alto (`ipertensione_colesterolo`)
   - Pazienti con anomalie all'ECG (`ecg_anomalo`)
   - Pazienti con angina da sforzo (`angina_sforzo`)
   - Pazienti con profilo ad alto rischio (`profilo_alto_rischio`)
+  
+  I risultati vengono troncati a un massimo di 3 elementi per una visualizzazione più compatta.
 
-  I risultati vengono troncati per visualizzare al massimo 3 elementi per ciascuna query.
+---
 
 ### 5. Algoritmo BFS per la Ricerca di Pazienti Simili
+
 - **Implementazione della BFS:**  
-  Viene implementato un algoritmo di ricerca in ampiezza (BFS) per trovare pazienti simili basandosi su una condizione definita nella query Prolog `heart_patient`.  
+  Viene implementato un algoritmo di ricerca in ampiezza (BFS) per trovare pazienti simili.  
 - **Funzionamento:**  
   - Si parte da un paziente iniziale (definito da età e sesso).
   - La ricerca si espande in ampiezza fino a una profondità massima (default 3).
-  - Si evitano duplicazioni tenendo traccia dei pazienti già visitati.
+  - Vengono evitati duplicati tramite una struttura di controllo (insieme dei visitati).
   - Se il numero di risultati supera 3, viene aggiunto un segnaposto per indicare il troncamento.
 
 ---
